@@ -107,7 +107,7 @@ def housekeeper(gws_dir_list, ceda_dir_list, gws_dir, ceda_dir, products_to_dele
             if filename in on_ceda:
                 print("\t{} on GWS and CEDA".format(filename))
                 gws_md5 = md5(gws_path, error_log)
-                ceda_md5 = md5(ceda_path, error_log)
+                ceda_md5 = md5(ceda_path,error_log)
                 if gws_md5 == ceda_md5:
                     print('\t\tIdentical File found in both GWS and CEDA')
                     with open(products_to_delete_txt, 'a') as p2d:
