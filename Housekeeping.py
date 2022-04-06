@@ -152,12 +152,15 @@ s2_gws_dir_list = []
 s2_ceda_dir_list = []
 
 # Path to output text files -  Hard code to JASIN/CEDA
-s1_gws_files = "./s1_gws_files.txt"
-s1_ceda_files = "./s1_ceda_files.txt"
-s2_gws_files = "./s2_gws_files.txt"
-s2_ceda_files = "./s2_ceda_files.txt"
-products_to_delete = "./products_to_delete.txt"
-errors = "./Errors.txt"
+out_dir = os.path.dirname('./Housekeeping_Outputs')
+if not os.path.exists(out_dir):
+    os.makedirs(out_dir)
+s1_gws_files = "{}/s1_gws_files.txt".format(out_dir)
+s1_ceda_files = "{}/s1_ceda_files.txt".format(out_dir)
+s2_gws_files = "{}/s2_gws_files.txt".format(out_dir)
+s2_ceda_files = "{}/s2_ceda_files.txt".format(out_dir)
+products_to_delete = "{}/products_to_delete.txt".format(out_dir)
+errors = "{}/Errors.txt".format(out_dir)
 open(products_to_delete, mode='w').close()
 open(errors, mode='w').close()
 
