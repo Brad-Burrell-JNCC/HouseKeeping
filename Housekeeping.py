@@ -1,10 +1,13 @@
 # Name: Housekeeping.py
-# Author: Bradley Burrell - March 2022
+# Author: Bradley Burrell - 202203-Current
 # Description: This script search for tif file in the GWS and CEDA directories, and compares the filenames, if the
 #              filenames  match, the file are analysed. Firstly, an MD5 Hash value is generated, if  they match the
 #              version on GWS is added to the "products_to_delete.txt" file, else the dates are compared. if the new
 #              version is on  CEDA the GWS version is "products_to_delete.txt" file.
 # REQUIREMENTS:
+#  1. Python version 3.10
+# CHANGELOG:
+#  20221012-BB; Added timecode to start of file and directories. Updated parent directory path.
 #  1. Python version 3.10
 
 # READING:
@@ -16,7 +19,6 @@ import datetime
 import hashlib
 import os
 import sys
-
 
 # ===================================================== Functions ======================================================
 def jasmin_list_builder(sen_dir, sen_list, text_file, date):
@@ -136,7 +138,26 @@ start_time = datetime.datetime.now()
 # These lines control whether the script will search for S1 and/or S2 tifs. For If "test_s1" is set to True and
 # "test_s2" is False the script will search for S1 but not S2.
 test_s1 = True
-test_s2 = False
+test_s2 = Fals
+
+# Take the date input from System Arguments (expected format YYYY-MM-DD) can converts to <class 'datetime.datetime'>
+newd = datetime.datetime.fromisoformat(sys.argv[1]) # Start Date
+endd = datetime.datetime.fromisoformat(sys.argv[2]) # End Date
+
+# Creates date code for easy identification 
+newd_year = newd.year
+newd_month = newd.month
+endd_year = endd.year
+endd_month = endd.month
+
+datecode = None
+if newd_year == endd_year:
+    if newd_month == endd_month:
+        datecode = "{}{:02d}".format(newd_year, newd_month)
+    else:
+        datecode = "{0}{1:02d}-{0}{2:02d}".format(newd_year, newd_month, endd_month)
+else:
+    datecode = "{}{:02d}-{}{:02d}".format(newd_year, newd_month, endd_year, endd_month)
 
 # Pathway to sentinel direct -  Hard coded for JASIN/CEDA
 s1_gws_dir = '/gws/nopw/j04/defra_eo/public/s1_ard_update'
@@ -151,22 +172,29 @@ s1_ceda_dir_list = []
 s2_gws_dir_list = []
 s2_ceda_dir_list = []
 
+# Creates timestamp for files and folders
+now = datetime.datetime.now()
+datetime_stamp = str(now).split('.')[0].replace('-', '').replace(' ', '').replace(':', '')
+
 # Path to output text files -  Hard code to JASIN/CEDA
-out_dir = os.path.dirname('./Housekeeping_Outputs')
-if not os.path.exists(out_dir):
-    os.makedirs(out_dir)
-s1_gws_files = "{}/s1_gws_files.txt".format(out_dir)
-s1_ceda_files = "{}/s1_ceda_files.txt".format(out_dir)
-s2_gws_files = "{}/s2_gws_files.txt".format(out_dir)
-s2_ceda_files = "{}/s2_ceda_files.txt".format(out_dir)
-products_to_delete = "{}/products_to_delete.txt".format(out_dir)
-errors = "{}/Errors.txt".format(out_dir)
+parent_dir = "gws/nopw/j04/defra_eo/data/output/sentinel/1/reports/housekeeping"
+run_dir = "{}/{}_housekeeping_{}".format(parent_dir, datecode, datetime_stamp)
+
+if not os.path.exists(parent_dir):
+      os.mkdir(parent_dir)
+if not os.path.exists(run_dir):
+      os.mkdir(run_dir)
+      
+s1_gws_files = "{}/{}_s1_gws_files_{}.txt".format(run_dir, datecode, datetime_stamp)
+s1_ceda_files = "{}/{}_s1_ceda_files_{}.txt".format(run_dir, datecode, datetime_stamp)
+s2_gws_files = "{}/{}_s2_ceda_files_{}.txt".format(run_dir, datecode, datetime_stamp)
+s2_ceda_files = "{}/{}_s2_ceda_files_{}.txt".format(run_dir, datecode, datetime_stamp)
+products_to_delete = "{}/{}_products_to_delete_{}.txt".format(run_dir, datecode, datetime_stamp)
+errors = "{}/{}_Errors_{}.txt".format(run_dir, datecode, datetime_stamp)
 open(products_to_delete, mode='w').close()
 open(errors, mode='w').close()
 
-# Take the date input from System Arguments (expected format YYYY-MM-DD) can converts to <class 'datetime.datetime'>
-newd = datetime.datetime.fromisoformat(sys.argv[1]) # Start Date
-endd = datetime.datetime.fromisoformat(sys.argv[2]) # End Date
+
 
 # Incremental works through date between the Start Date and the End Date
 while newd <= endd:
