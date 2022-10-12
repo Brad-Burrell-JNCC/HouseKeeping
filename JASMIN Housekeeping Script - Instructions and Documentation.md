@@ -17,7 +17,7 @@ Python 3.8 (Tested on: 3.8.12 | packaged by conda-forge | (default, Oct 12 2021,
 
 ## Setup
 
-Create a new folder in your user area on JASMIN, copy the script into the folder. Please make sure your JASMIN and CEDA accounts are linked.
+Please make sure your JASMIN and CEDA accounts are linked.
 
 ## Running Instructions
 
@@ -50,27 +50,25 @@ to sign into a machine using (Please note you can uses any “sci” machine, �
 Press the ‘Enter’ key
 
 ### Step 5
+
+Change directory to where the python script is located, for example:
+
+~~~
+cd /gws/nopw/j04/defra_eo/scripts/
+~~~
+
+### Step 6
 The Housekeeping script take a long time to run, by entering the following command you will be able to close MobaXterm  and the script will keep running:
 ~~~
 screen
 ~~~
 The will clear all text currently in your terminal. This step is optional, but advisable. 
 
-### Step 6
+### Step 7
 
 Enter the following command into JAMSIN, to load the correct JASPY module (This module meets all the requirements laid out in section 2.) using:
 ~~~
 module load jaspy/3.8/r20211105
-~~~
-
-Press the ‘Enter’ key
-
-### Step 7
-
-Change directory to where the python script is located, for example:
-
-~~~
-cd code/ard/
 ~~~
 
 Press the ‘Enter’ key
@@ -84,6 +82,8 @@ To run the script enter the command from the text box, altering the {start-date}
 ~~~
 
 Press the ‘Enter’ key
+
+The Script can take several hours to run. As long as you used the 'screen' command in Step 6 MobaXterm can be closed down and check back the next day.
 
 ### Step 9
 
@@ -133,3 +133,9 @@ You should have
 >201801_Errors_20220923100216.txt
 
 If you are missing any, contact Brad Burrell or Rachel King for advise.
+
+### Step 13 
+Download and save a copy of the products to delete file in the Teams Simple ARD Service [Housekeeping Lists](https://jncc.sharepoint.com/:f:/r/sites/TeamsSimpleARDService/Shared%20Documents/General/Processing%20QA/S1_clipping_QC/Housekeeping%20lists?csf=1&web=1&e=FfEO3U) using the name format YYYYMM_delete.txt
+
+### Step 14 (WIP)
+The deletion process will be detail here once the process has been decided.
