@@ -75,7 +75,7 @@ Press the ‘Enter’ key
 
 ### Step 8
 
-To run the script enter the command from the text box, altering the {start-date} {end-date} to your desired dates. 
+To run the script enter the command from the text box, altering the {start-date} {end-date} to your desired dates. Present the dates in for following format YYYY-MM-DD - (do not add in the curly brackets)
 
 ~~~
  python Housekeeping.py {start-date} {end-date}
